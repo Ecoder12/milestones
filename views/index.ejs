@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,19 +8,38 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
-        .status-badge { padding: 5px 10px; border-radius: 5px; color: white; font-weight: bold; }
-        .status-pending { background: #f44336; }
-        .status-in-progress { background: #ff9800; }
-        .status-completed { background: #4caf50; }
-        .status-verify { background: #33b0d6; }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background: #f44336;
+        }
+
+        .status-in-progress {
+            background: #ff9800;
+        }
+
+        .status-completed {
+            background: #4caf50;
+        }
+
+        .status-verify {
+            background: #33b0d6;
+        }
+
         .list-group-item.d-flex.justify-content-between.align-items-center {
-    background-color: #e3f1ff;
-}
+            background-color: #e3f1ff;
+        }
     </style>
 </head>
+
 <body class="bg-light">
     <div class="container mt-4">
-        <h1 class="text-center"><i class="fas fa-tasks"></i> Saber Feature Milestone Tracker 🚀</h1>
+        <h1 class="text-center"><i class="fas fa-tasks"></i> Sabre Feature Milestone Tracker 🚀</h1>
 
         <div class="card p-4 shadow-sm">
             <h4><i class="fas fa-plus-circle"></i> Add New Milestone</h4>
@@ -55,51 +75,94 @@
 
         <h3 class="mt-4"><i class="fas fa-list"></i> Milestones</h3>
         <div class="list-group mt-3">
-            <% milestones.forEach(milestone => { %>
+            <% milestones.forEach(milestone=> { %>
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                        <strong><i class="fas fa-check-circle">📌 </i> <%= milestone.name %></strong>
-                        <span class="status-badge status-<%= milestone.status %>"><%= milestone.status %></span>
-                        <p><i class="fas fa-file-alt">📝 </i> <%= milestone.description %></p>
-                        <p><i class="fas fa-tasks">✅ </i> To-Do: <%= milestone.todo_list %></p>
-                        <small class="text-muted"><i class="fas fa-calendar"></i> Delivery: <%= milestone.delivery_date %></small>
+                        <strong><i class="fas fa-check-circle">📌 </i>
+                            <%= milestone.name %>
+                        </strong>
+                        <span class="status-badge status-<%= milestone.status %>">
+                            <%= milestone.status %>
+                        </span>
+                        <p><i class="fas fa-file-alt">📝 </i>
+                            <%= milestone.description %>
+                        </p>
+                        <p><i class="fas fa-tasks">✅ </i> To-Do: <%= milestone.todo_list %>
+                        </p>
+                        <small class="text-muted"><i class="fas fa-calendar"></i> Delivery: <%= milestone.delivery_date
+                                %></small>
                     </div>
                     <div>
-                        <!-- <button class="btn btn-warning btn-sm" onclick="editMilestone('<%= milestone.id %>', '<%= milestone.name %>', '<%= milestone.description %>', '<%= milestone.todo_list %>', '<%= milestone.status %>', '<%= milestone.delivery_date %>')">
+                        <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal" onclick="fillEditModal('<%= milestone.id %>', '<%= milestone.name %>', '<%= milestone.description %>', '<%= milestone.todo_list %>', '<%= milestone.status %>', '<%= milestone.delivery_date %>')">
                             ✏️ Edit
-                        </button> -->
+                        </button>
                         <!-- <span class="status-badge status-<%= milestone.status %>"><%= milestone.status %></span> -->
                         <a href="/delete/<%= milestone.id %>" class="btn btn-danger btn-sm">❌ Delete</a>
                     </div>
                 </div>
-            <% }); %>
+                <% }); %>
         </div>
     </div>
 
     <!-- Edit Modal -->
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Milestone</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editForm" method="POST">
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="edit-id">
+                        <div class="mb-3">
+                            <label class="form-label">Milestone Name</label>
+                            <input type="text" name="name" id="edit-name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" id="edit-description" class="form-control" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">To-Do List</label>
+                            <input type="text" name="todo_list" id="edit-todo" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select name="status" id="edit-status" class="form-control">
+                                <option value="pending">Pending</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Delivery Date</label>
+                            <input type="date" name="delivery_date" id="edit-date" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function editMilestone(id, name, description, todo, status, date) {
-            const form = document.createElement('form');
-            form.action = `/edit-milestone/${id}`;
-            form.method = "POST";
-            form.innerHTML = `
-                <div class="mb-3">
-                    <label>Milestone Name</label>
-                    <input type="text" name="name" class="form-control" value="${name}">
-                </div>
-                <div class="mb-3">
-                    <label>Description</label>
-                    <textarea name="description" class="form-control">${description}</textarea>
-                </div>
-                <div class="mb-3">
-                    <label>To-Do List</label>
-                    <input type="text" name="todo_list" class="form-control" value="${todo}">
-                </div>
-                <button type="submit" class="btn btn-success">Save Changes</button>
-            `;
-            document.body.appendChild(form);
-            form.submit();
+        function fillEditModal(id, name, description, todo, status, date) {
+            document.getElementById('edit-id').value = id;
+            document.getElementById('edit-name').value = name;
+            document.getElementById('edit-description').value = description;
+            document.getElementById('edit-todo').value = todo;
+            document.getElementById('edit-status').value = status;
+            document.getElementById('edit-date').value = date;
+            document.getElementById('editForm').action = `/edit-milestone/${id}`;
         }
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
