@@ -8,32 +8,20 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
-        .status-badge {
-            padding: 5px 10px;
-            border-radius: 5px;
-            color: white;
-            font-weight: bold;
-        }
-
-        .status-pending {
-            background: #f44336;
-        }
-
-        .status-in-progress {
-            background: #ff9800;
-        }
-
-        .status-completed {
-            background: #4caf50;
-        }
-
-        .status-verify {
-            background: #33b0d6;
-        }
-
+        .status-badge { padding: 5px 10px; border-radius: 5px; color: white; font-weight: bold; }
+        .status-pending { background: #f44336; }
+        .status-in-progress { background: #ff9800; }
+        .status-completed { background: #4caf50; }
+        .status-verify { background: #33b0d6; }
+        span.status-badge.status-Verify {
+    background-color: #467ba8;
+}
         .list-group-item.d-flex.justify-content-between.align-items-center {
-            background-color: #e3f1ff;
-        }
+    background-color: #e3f1ff;
+}
+.list-group-item.d-flex.justify-content-between.align-items-center {
+    margin-bottom: 1rem;
+}
     </style>
 </head>
 
@@ -102,6 +90,7 @@
                 </div>
                 <% }); %>
         </div>
+        
     </div>
 
     <!-- Edit Modal -->
