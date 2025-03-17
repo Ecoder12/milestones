@@ -44,9 +44,9 @@ app.post("/add-milestone", (req, res) => {
 
 // 📌 Edit Milestone
 app.post("/edit-milestone/:id", (req, res) => {
-    const { name, description, status, delivery_date, todo_list } = req.body;
-    const sql = "UPDATE milestones SET name=?, description=?, status=?, delivery_date=?, todo_list=? WHERE id=?";
-    db.query(sql, [name, description, status, delivery_date, todo_list, req.params.id], (err) => {
+    const { name, description, status, delivery_date, todo_list, remark } = req.body;
+    const sql = "UPDATE milestones SET name=?, description=?, status=?, delivery_date=?, todo_list=?, remark = ? WHERE id=?";
+    db.query(sql, [name, description, status, delivery_date, todo_list, remark, req.params.id], (err) => {
         if (err) return res.status(500).send(err);
         res.redirect("/");
     });
