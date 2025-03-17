@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saber Feature Milestone Tracker 🚀</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .status-badge { padding: 5px 10px; border-radius: 5px; color: white; font-weight: bold; }
+        .status-pending { background: #f44336; }
+        .status-in-progress { background: #ff9800; }
+        .status-completed { background: #4caf50; }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container mt-4">
+        <h1 class="text-center"><i class="fas fa-tasks"></i> Saber Feature Milestone Tracker 🚀</h1>
+
+        <div class="card p-4 shadow-sm">
+            <h4><i class="fas fa-plus-circle"></i> Add New Milestone</h4>
+            <form action="/add-milestone" method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Milestone Name</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">To-Do List (comma separated)</label>
+                    <input type="text" name="todo_list" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-control">
+                        <option value="pending">Pending</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Delivery Date</label>
+                    <input type="date" name="delivery_date" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+            </form>
+        </div>
+
+        <h3 class="mt-4"><i class="fas fa-list"></i> Milestones</h3>
+        <div class="list-group mt-3">
+            <% milestones.forEach(milestone => { %>
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong><i class="fas fa-check-circle"></i> <%= milestone.name %></strong>
+                        <span class="status-badge status-<%= milestone.status %>"><%= milestone.status %></span>
+                        <p><i class="fas fa-file-alt"></i> <%= milestone.description %></p>
+                        <p><i class="fas fa-tasks"></i> To-Do: <%= milestone.todo_list %></p>
+                        <small class="text-muted"><i class="fas fa-calendar"></i> Delivery: <%= milestone.delivery_date %></small>
+                    </div>
+                    <div>
+                        <!-- <button class="btn btn-warning btn-sm" onclick="editMilestone('<%= milestone.id %>', '<%= milestone.name %>', '<%= milestone.description %>', '<%= milestone.todo_list %>', '<%= milestone.status %>', '<%= milestone.delivery_date %>')">
+                            ✏️ Edit
+                        </button> -->
+                        <a href="/delete/<%= milestone.id %>" class="btn btn-danger btn-sm">❌ Delete</a>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <script>
+        function editMilestone(id, name, description, todo, status, date) {
+            const form = document.createElement('form');
+            form.action = `/edit-milestone/${id}`;
+            form.method = "POST";
+            form.innerHTML = `
+                <div class="mb-3">
+                    <label>Milestone Name</label>
+                    <input type="text" name="name" class="form-control" value="${name}">
+                </div>
+                <div class="mb-3">
+                    <label>Description</label>
+                    <textarea name="description" class="form-control">${description}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label>To-Do List</label>
+                    <input type="text" name="todo_list" class="form-control" value="${todo}">
+                </div>
+                <button type="submit" class="btn btn-success">Save Changes</button>
+            `;
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+</body>
+</html>
