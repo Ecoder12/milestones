@@ -11,6 +11,9 @@
         .status-pending { background: #f44336; }
         .status-in-progress { background: #ff9800; }
         .status-completed { background: #4caf50; }
+        .list-group-item.d-flex.justify-content-between.align-items-center {
+    background-color: #e3f1ff;
+}
     </style>
 </head>
 <body class="bg-light">
@@ -21,19 +24,19 @@
             <h4><i class="fas fa-plus-circle"></i> Add New Milestone</h4>
             <form action="/add-milestone" method="POST">
                 <div class="mb-3">
-                    <label class="form-label">Milestone Name</label>
+                    <label class="form-label">📌 Milestone Name</label>
                     <input type="text" name="name" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Description</label>
+                    <label class="form-label">📝 Description</label>
                     <textarea name="description" class="form-control" required></textarea>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">To-Do List (comma separated)</label>
+                    <label class="form-label">✅ To-Do List (comma separated)</label>
                     <input type="text" name="todo_list" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Status</label>
+                    <label class="form-label">🔵 Status</label>
                     <select name="status" class="form-control">
                         <option value="pending">Pending</option>
                         <option value="in-progress">In Progress</option>
@@ -41,7 +44,7 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Delivery Date</label>
+                    <label class="form-label">🗓️ Delivery Date</label>
                     <input type="date" name="delivery_date" class="form-control" required>
                 </div>
                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
@@ -53,16 +56,17 @@
             <% milestones.forEach(milestone => { %>
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                        <strong><i class="fas fa-check-circle"></i> <%= milestone.name %></strong>
+                        <strong><i class="fas fa-check-circle">📌 </i> <%= milestone.name %></strong>
                         <span class="status-badge status-<%= milestone.status %>"><%= milestone.status %></span>
-                        <p><i class="fas fa-file-alt"></i> <%= milestone.description %></p>
-                        <p><i class="fas fa-tasks"></i> To-Do: <%= milestone.todo_list %></p>
+                        <p><i class="fas fa-file-alt">📝 </i> <%= milestone.description %></p>
+                        <p><i class="fas fa-tasks">✅ </i> To-Do: <%= milestone.todo_list %></p>
                         <small class="text-muted"><i class="fas fa-calendar"></i> Delivery: <%= milestone.delivery_date %></small>
                     </div>
                     <div>
                         <!-- <button class="btn btn-warning btn-sm" onclick="editMilestone('<%= milestone.id %>', '<%= milestone.name %>', '<%= milestone.description %>', '<%= milestone.todo_list %>', '<%= milestone.status %>', '<%= milestone.delivery_date %>')">
                             ✏️ Edit
                         </button> -->
+                        <!-- <span class="status-badge status-<%= milestone.status %>"><%= milestone.status %></span> -->
                         <a href="/delete/<%= milestone.id %>" class="btn btn-danger btn-sm">❌ Delete</a>
                     </div>
                 </div>
