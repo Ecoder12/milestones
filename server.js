@@ -47,8 +47,10 @@ app.post("/edit-milestone/:id", (req, res) => {
     const { name, description, status, delivery_date, todo_list, remark } = req.body;
     const sql = "UPDATE milestones SET name=?, description=?, status=?, delivery_date=?, todo_list=?, remark = ? WHERE id=?";
     db.query(sql, [name, description, status, delivery_date, todo_list, remark, req.params.id], (err) => {
-        if (err) return res.status(500).send(err);
-        res.redirect("/");
+        if (err) {
+            return res.status(500).json({ success: false, message: "Error updating milestone" });
+        }
+        res.json({ success: true, message: "Milestone updated successfully" });
     });
 });
 

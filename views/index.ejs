@@ -232,22 +232,23 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(updatedData)
-                }).then(response => response.json())
+                })
+                    .then(response => response.json())
                     .then(data => {
                         if (data.success) {
                             alert('Milestone updated successfully!');
-                            parent.querySelector('.view-name').textContent = updatedData.name;
-                            parent.querySelector('.view-description').textContent = updatedData.description;
-                            parent.querySelector('.view-todo').textContent = updatedData.todo_list;
-                            parent.querySelector('.view-date').textContent = updatedData.delivery_date;
+                            parent.querySelector('.milestone-name').textContent = updatedData.name;
+                            parent.querySelector('.milestone-description').textContent = updatedData.description;
+                            parent.querySelector('.milestone-todo').textContent = updatedData.todo_list;
+                            parent.querySelector('.milestone-date').textContent = updatedData.delivery_date;
                             parent.querySelector('.view-remark').textContent = updatedData.remark || "No remarks"; // ✅ Display remark
 
-                            let statusBadge = parent.querySelector('.view-status');
+                            let statusBadge = parent.querySelector('.status-badge');
                             statusBadge.textContent = updatedData.status;
-                            statusBadge.className = `view-status status-badge status-${updatedData.status.replace(/\s+/g, '-').toLowerCase()}`;
+                            statusBadge.className = `status-badge status-${updatedData.status.replace(/\s+/g, '-').toLowerCase()}`;
 
-                            parent.querySelectorAll('.edit-input, .edit-remark').forEach(field => field.classList.add('d-none'));
-                            parent.querySelectorAll('.view-field, .view-remark').forEach(field => field.classList.remove('d-none'));
+                            parent.querySelectorAll('.edit-name, .edit-description, .edit-todo, .edit-date, .edit-status, .edit-remark, .milestone-name-label, .milestone-status-label').forEach(el => el.classList.add('d-none'));
+                            parent.querySelectorAll('.milestone-name, .milestone-description, .milestone-todo, .milestone-date, .status-badge').forEach(el => el.classList.remove('d-none'));
 
                             parent.querySelector('.save-btn').classList.add('d-none');
                             parent.querySelector('.cancel-btn').classList.add('d-none');
@@ -263,7 +264,6 @@
                     });
             });
         });
-
     </script>
 </body>
 
